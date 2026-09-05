@@ -6,6 +6,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
+    allowedHosts: true,
     proxy: {
       '/api/threat-feed/openphish': {
         target: 'https://openphish.com',
@@ -13,5 +14,8 @@ export default defineConfig({
         rewrite: () => '/feed.txt'
       }
     }
+  },
+  preview: {
+    allowedHosts: true
   }
 })
