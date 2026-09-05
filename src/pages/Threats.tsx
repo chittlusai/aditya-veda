@@ -297,15 +297,15 @@ export default function Threats() {
             )}
           </div>
 
-          {/* Category Pills */}
-          <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono">
-            <Filter size={14} className="text-slate-400 mr-1 hidden sm:inline" />
+          {/* Category Pills — Mobile Touch Scrollable */}
+          <div className="flex items-center gap-1.5 text-xs font-mono overflow-x-auto no-scrollbar max-w-full pb-1">
+            <Filter size={14} className="text-slate-400 mr-1 shrink-0 hidden sm:inline" />
             {categories.map((cat) => (
               <button
                 key={cat}
                 type="button"
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer shrink-0 ${
                   selectedCategory.toUpperCase() === cat.toUpperCase()
                     ? 'bg-orange-500 text-white shadow-xs font-bold'
                     : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200/80'
@@ -317,113 +317,186 @@ export default function Threats() {
           </div>
         </div>
 
-        {/* Real Data Stream Table */}
-        <div className="overflow-x-auto border border-slate-200 rounded-xl shadow-xs">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 uppercase font-mono font-bold text-[11px]">
-              <tr>
-                <th className="py-3 px-4">Targeted Brand</th>
-                <th className="py-3 px-4">Malicious URL / IOC</th>
-                <th className="py-3 px-4">Attack Vector</th>
-                <th className="py-3 px-4 text-center">Threat Risk</th>
-                <th className="py-3 px-4">Discovered</th>
-                <th className="py-3 px-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 font-mono">
-              {filteredThreats.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="py-12 text-center text-slate-500 font-sans">
-                    <AlertTriangle size={24} className="mx-auto text-amber-500 mb-2" />
-                    <p className="font-bold text-slate-700">No matching threat streams found</p>
-                    <p className="text-xs text-slate-500 mt-1">Try clearing your search query or selecting "ALL" categories.</p>
-                  </td>
-                </tr>
-              ) : (
-                filteredThreats.slice(0, 30).map((threat) => (
-                  <tr key={threat.id} className="hover:bg-slate-50/80 transition-colors">
-                    {/* Brand */}
-                    <td className="py-3.5 px-4">
-                      <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                        <div>
-                          <div className="font-bold text-slate-900 font-sans">{threat.targetBrand}</div>
-                          <div className="text-[10px] text-slate-500 uppercase">{threat.brandCategory}</div>
-                        </div>
-                      </div>
-                    </td>
-
-                    {/* URL */}
-                    <td className="py-3.5 px-4 max-w-[280px]">
-                      <div className="flex items-center gap-1.5">
-                        <span className="truncate text-slate-700 font-medium select-all" title={threat.url}>
-                          {threat.domain}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => handleCopy(threat.id, threat.url)}
-                          className="p-1 text-slate-400 hover:text-slate-700 rounded transition cursor-pointer"
-                          title="Copy full malicious URL"
-                        >
-                          {copiedId === threat.id ? (
-                            <Check size={13} className="text-emerald-600" />
-                          ) : (
-                            <Copy size={13} />
-                          )}
-                        </button>
-                      </div>
-                      <div className="text-[10px] text-slate-400 truncate max-w-[260px]" title={threat.url}>
-                        {threat.url}
-                      </div>
-                    </td>
-
-                    {/* Attack Vector */}
-                    <td className="py-3.5 px-4">
-                      <span className="text-slate-700 font-sans font-medium text-[11px] block max-w-[220px]">
-                        {threat.attackVector}
+        {/* Real Data Stream: Mobile Card List (<md) + Desktop Table (>=md) */}
+        <div className="border border-slate-200 rounded-xl shadow-xs overflow-hidden">
+          {/* Mobile Card List (<md) */}
+          <div className="md:hidden divide-y divide-slate-100 font-mono">
+            {filteredThreats.length === 0 ? (
+              <div className="py-12 text-center text-slate-500 font-sans p-4">
+                <AlertTriangle size={24} className="mx-auto text-amber-500 mb-2" />
+                <p className="font-bold text-slate-700">No matching threat streams found</p>
+                <p className="text-xs text-slate-500 mt-1">Try clearing your search query or selecting "ALL" categories.</p>
+              </div>
+            ) : (
+              filteredThreats.slice(0, 30).map((threat) => (
+                <div key={threat.id} className="p-4 space-y-2.5 hover:bg-slate-50/80 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse shrink-0" />
+                      <span className="font-bold text-slate-900 font-sans text-sm">{threat.targetBrand}</span>
+                      <span className="text-[10px] text-slate-500 uppercase px-1.5 py-0.2 bg-slate-100 rounded">
+                        {threat.brandCategory}
                       </span>
-                      {threat.hostingProvider && (
-                        <span className="inline-flex items-center gap-1 text-[10px] text-slate-400 mt-0.5">
-                          <Server size={10} /> {threat.hostingProvider}
-                        </span>
-                      )}
-                    </td>
+                    </div>
+                    <span
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        threat.riskScore >= 95
+                          ? 'bg-red-50 text-red-700 border border-red-200'
+                          : 'bg-amber-50 text-amber-800 border border-amber-200'
+                      }`}
+                    >
+                      {threat.riskScore}/100
+                    </span>
+                  </div>
 
-                    {/* Risk Score */}
-                    <td className="py-3.5 px-4 text-center">
-                      <span
-                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${
-                          threat.riskScore >= 95
-                            ? 'bg-red-50 text-red-700 border border-red-200'
-                            : 'bg-amber-50 text-amber-800 border border-amber-200'
-                        }`}
-                      >
-                        {threat.riskScore}/100
-                      </span>
-                    </td>
-
-                    {/* Discovered */}
-                    <td className="py-3.5 px-4 text-slate-500 text-[11px] whitespace-nowrap">
-                      {threat.discoveredRelative}
-                    </td>
-
-                    {/* Actions */}
-                    <td className="py-3.5 px-4 text-right">
+                  {/* Malicious URL & Copy */}
+                  <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs">
+                    <div className="flex items-center justify-between gap-1.5">
+                      <span className="font-bold text-slate-800 truncate">{threat.domain}</span>
                       <button
                         type="button"
-                        onClick={() => handleInspectInScanner(threat.url)}
-                        className="px-3 py-1.5 rounded-lg bg-orange-50 hover:bg-orange-500 text-orange-700 hover:text-white border border-orange-200 hover:border-orange-500 font-bold text-[11px] font-mono transition cursor-pointer inline-flex items-center gap-1 shadow-2xs"
-                        title="Run PhishGuard real-time heuristic analysis on this live URL"
+                        onClick={() => handleCopy(threat.id, threat.url)}
+                        className="p-1 text-slate-400 hover:text-slate-700 rounded transition cursor-pointer shrink-0"
+                        title="Copy full malicious URL"
                       >
-                        <span>Inspect in Scanner</span>
-                        <ExternalLink size={12} />
+                        {copiedId === threat.id ? (
+                          <Check size={14} className="text-emerald-600" />
+                        ) : (
+                          <Copy size={14} />
+                        )}
                       </button>
+                    </div>
+                    <div className="text-[10px] text-slate-400 truncate mt-0.5">{threat.url}</div>
+                  </div>
+
+                  {/* Attack Vector & Discovered */}
+                  <div className="flex items-center justify-between text-[11px] text-slate-500">
+                    <span className="font-sans font-medium text-slate-700 truncate max-w-[200px]">{threat.attackVector}</span>
+                    <span className="text-[10px] text-slate-400 shrink-0">{threat.discoveredRelative}</span>
+                  </div>
+
+                  {/* Direct Inspect Button */}
+                  <button
+                    type="button"
+                    onClick={() => handleInspectInScanner(threat.url)}
+                    className="w-full py-2.5 px-3 rounded-xl bg-orange-50 hover:bg-orange-500 text-orange-700 hover:text-white border border-orange-200 font-bold text-xs font-mono transition cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs min-h-[40px] active:scale-98"
+                  >
+                    <span>Inspect Target in Scanner</span>
+                    <ExternalLink size={13} />
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* Desktop Table (>=md) */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 uppercase font-mono font-bold text-[11px]">
+                <tr>
+                  <th className="py-3 px-4">Targeted Brand</th>
+                  <th className="py-3 px-4">Malicious URL / IOC</th>
+                  <th className="py-3 px-4">Attack Vector</th>
+                  <th className="py-3 px-4 text-center">Threat Risk</th>
+                  <th className="py-3 px-4">Discovered</th>
+                  <th className="py-3 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 font-mono">
+                {filteredThreats.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="py-12 text-center text-slate-500 font-sans">
+                      <AlertTriangle size={24} className="mx-auto text-amber-500 mb-2" />
+                      <p className="font-bold text-slate-700">No matching threat streams found</p>
+                      <p className="text-xs text-slate-500 mt-1">Try clearing your search query or selecting "ALL" categories.</p>
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  filteredThreats.slice(0, 30).map((threat) => (
+                    <tr key={threat.id} className="hover:bg-slate-50/80 transition-colors">
+                      {/* Brand */}
+                      <td className="py-3.5 px-4">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                          <div>
+                            <div className="font-bold text-slate-900 font-sans">{threat.targetBrand}</div>
+                            <div className="text-[10px] text-slate-500 uppercase">{threat.brandCategory}</div>
+                          </div>
+                        </div>
+                      </td>
+
+                      {/* URL */}
+                      <td className="py-3.5 px-4 max-w-[280px]">
+                        <div className="flex items-center gap-1.5">
+                          <span className="truncate text-slate-700 font-medium select-all" title={threat.url}>
+                            {threat.domain}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => handleCopy(threat.id, threat.url)}
+                            className="p-1 text-slate-400 hover:text-slate-700 rounded transition cursor-pointer"
+                            title="Copy full malicious URL"
+                          >
+                            {copiedId === threat.id ? (
+                              <Check size={13} className="text-emerald-600" />
+                            ) : (
+                              <Copy size={13} />
+                            )}
+                          </button>
+                        </div>
+                        <div className="text-[10px] text-slate-400 truncate max-w-[260px]" title={threat.url}>
+                          {threat.url}
+                        </div>
+                      </td>
+
+                      {/* Attack Vector */}
+                      <td className="py-3.5 px-4">
+                        <span className="text-slate-700 font-sans font-medium text-[11px] block max-w-[220px]">
+                          {threat.attackVector}
+                        </span>
+                        {threat.hostingProvider && (
+                          <span className="inline-flex items-center gap-1 text-[10px] text-slate-400 mt-0.5">
+                            <Server size={10} /> {threat.hostingProvider}
+                          </span>
+                        )}
+                      </td>
+
+                      {/* Risk Score */}
+                      <td className="py-3.5 px-4 text-center">
+                        <span
+                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${
+                            threat.riskScore >= 95
+                              ? 'bg-red-50 text-red-700 border border-red-200'
+                              : 'bg-amber-50 text-amber-800 border border-amber-200'
+                          }`}
+                        >
+                          {threat.riskScore}/100
+                        </span>
+                      </td>
+
+                      {/* Discovered */}
+                      <td className="py-3.5 px-4 text-slate-500 text-[11px] whitespace-nowrap">
+                        {threat.discoveredRelative}
+                      </td>
+
+                      {/* Actions */}
+                      <td className="py-3.5 px-4 text-right">
+                        <button
+                          type="button"
+                          onClick={() => handleInspectInScanner(threat.url)}
+                          className="px-3 py-1.5 rounded-lg bg-orange-50 hover:bg-orange-500 text-orange-700 hover:text-white border border-orange-200 hover:border-orange-500 font-bold text-[11px] font-mono transition cursor-pointer inline-flex items-center gap-1 shadow-2xs"
+                          title="Run PhishGuard real-time heuristic analysis on this live URL"
+                        >
+                          <span>Inspect in Scanner</span>
+                          <ExternalLink size={12} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Real Data Transparency Disclaimer */}

@@ -16,21 +16,21 @@ export default function Profile() {
       </div>
 
       {/* User Info Card */}
-      <div className="card bg-white border border-slate-200 shadow-sm p-6 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+      <div className="card bg-white border border-slate-200 shadow-sm p-4 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-orange-600 to-orange-400 text-white font-black text-2xl flex items-center justify-center shadow-lg shadow-orange-500/20">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-orange-600 to-orange-400 text-white font-black text-2xl flex items-center justify-center shadow-lg shadow-orange-500/20 shrink-0">
             {displayName.charAt(0).toUpperCase()}
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-xl font-bold text-slate-900">{displayName}</h2>
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900 truncate">{displayName}</h2>
               <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200 flex items-center gap-1">
                 <ShieldCheck size={12} /> MFA Verified
               </span>
             </div>
-            <p className="text-sm text-slate-600 font-mono mt-0.5 flex items-center gap-1.5">
-              <Mail size={13} className="text-slate-400" />
-              {displayEmail}
+            <p className="text-xs sm:text-sm text-slate-600 font-mono mt-0.5 flex items-center gap-1.5 truncate">
+              <Mail size={13} className="text-slate-400 shrink-0" />
+              <span className="truncate">{displayEmail}</span>
             </p>
             <p className="text-xs text-orange-600 font-bold uppercase tracking-wider mt-1">
               {displayRole}
@@ -40,7 +40,7 @@ export default function Profile() {
 
         <button
           onClick={() => { logout(); window.location.href = '/'; }}
-          className="btn-secondary text-xs px-4 py-2 text-red-600 border-red-200 hover:bg-red-50 flex items-center gap-1.5 cursor-pointer font-bold shrink-0"
+          className="btn-secondary text-xs px-4 py-2 text-red-600 border-red-200 hover:bg-red-50 flex items-center justify-center gap-1.5 cursor-pointer font-bold shrink-0 w-full sm:w-auto min-h-[40px]"
         >
           <LogOut size={14} /> End Session
         </button>

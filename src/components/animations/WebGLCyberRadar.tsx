@@ -374,8 +374,8 @@ export default function WebGLCyberRadar() {
         </div>
       </div>
 
-      {/* ── Main Viewport Area ───────────────────── */}
-      <div className="relative w-full h-[340px] sm:h-[380px] bg-slate-950 overflow-hidden">
+      {/* ── Main Viewport Area — Mobile Aspect Ratio ── */}
+      <div className="relative w-full h-[280px] sm:h-[380px] bg-slate-950 overflow-hidden">
         {viewMode === 'radar' ? (
           <>
             {/* Interactive 60fps Radar Canvas */}

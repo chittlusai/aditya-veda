@@ -49,7 +49,7 @@ export default function Safety() {
             <p className="text-sm text-[var(--color-text-muted)]">Help protect others by reporting a new threat.</p>
           </div>
         </div>
-        <button className="btn-primary px-6 py-2">Submit Report</button>
+        <button className="btn-primary px-6 py-2.5 w-full sm:w-auto min-h-[44px] cursor-pointer">Submit Report</button>
       </div>
     </div>
   );

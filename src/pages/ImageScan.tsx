@@ -129,10 +129,10 @@ export default function ImageScan() {
       </div>
 
       {/* Upload Box Card */}
-      <div className="card bg-white border border-slate-200/90 shadow-md p-6 rounded-2xl space-y-4 text-center">
-        <label className="block border-dashed border-2 border-slate-200 hover:border-emerald-400 py-10 px-4 rounded-xl cursor-pointer transition-all bg-slate-50/60 hover:bg-emerald-50/30 group">
+      <div className="card bg-white border border-slate-200/90 shadow-md p-4 sm:p-6 rounded-2xl space-y-4 text-center">
+        <label className="block border-dashed border-2 border-slate-200 hover:border-emerald-400 py-8 sm:py-12 px-4 rounded-xl cursor-pointer transition-all bg-slate-50/60 hover:bg-emerald-50/30 group">
           <Upload size={36} className="mx-auto text-slate-400 group-hover:text-emerald-600 mb-2 transition-colors" />
-          <h3 className="font-bold text-base text-slate-800 font-mono">
+          <h3 className="font-bold text-sm sm:text-base text-slate-800 font-mono">
             {previewName ? `Loaded: ${previewName}` : 'Upload Screenshot Image (JPG, PNG, WEBP)'}
           </h3>
           <p className="text-xs text-slate-500 mt-1 font-mono">Real-time OCR token analysis and copyright matching</p>
@@ -145,14 +145,14 @@ export default function ImageScan() {
         </label>
 
         {/* Preset Quick-Test Buttons */}
-        <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-500">
-          <span className="font-mono text-slate-400">Or test with preset images:</span>
+        <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-xs text-slate-500">
+          <span className="font-mono text-slate-400 w-full sm:w-auto">Or test with preset screenshots:</span>
           {PRESET_SCREENSHOTS.map((p) => (
             <button
               key={p.label}
               type="button"
               onClick={() => handleRunScan(p)}
-              className="px-2.5 py-1 rounded-md bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 font-medium transition cursor-pointer border border-slate-200/60 font-mono"
+              className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 font-medium transition cursor-pointer border border-slate-200/60 font-mono text-xs min-h-[36px] flex items-center justify-center"
             >
               {p.label}
             </button>
@@ -165,21 +165,21 @@ export default function ImageScan() {
         <div className="card bg-white text-slate-800 p-5 rounded-2xl border border-slate-200 shadow-md space-y-3 font-mono text-xs">
           <div className="flex items-center justify-between text-emerald-600 font-bold">
             <span className="flex items-center gap-2">
-              <Loader2 size={16} className="animate-spin text-emerald-600" />
-              RUNNING OPTICAL FORM ANALYSIS & LOGO HEURISTICS
+              <Loader2 size={16} className="animate-spin text-emerald-500" />
+              RUNNING OCR TOKEN ANALYSIS & BRAND VECTOR MATCHING
             </span>
-            <span className="text-[10px] bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-slate-600 font-bold">OCR v4.1</span>
+            <span className="text-[10px] bg-slate-100 px-2 py-0.5 rounded text-slate-600 border border-slate-200 font-bold">VISUAL ENGINE</span>
           </div>
-          <p className="text-slate-600">Extracting textual tokens, matching brand logos against copyright registry, auditing form elements...</p>
-          <div className="w-full bg-slate-100 border border-slate-200 h-2 rounded-full overflow-hidden">
-            <div className="bg-emerald-500 h-full w-4/5 animate-pulse" />
+          <p className="text-slate-600">Extracting login layout heuristics, font geometry, and credential theft vectors...</p>
+          <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
+            <div className="bg-emerald-500 h-full w-3/4 animate-pulse" />
           </div>
         </div>
       )}
 
       {/* Results */}
       {status === 'done' && result && (
-        <div className="card bg-white border border-slate-200/90 shadow-xl rounded-2xl p-6 space-y-6 text-left animate-in fade-in duration-300">
+        <div className="card bg-white border border-slate-200/90 shadow-xl rounded-2xl p-4 sm:p-6 space-y-5 sm:space-y-6 text-left animate-in fade-in duration-300">
           {/* Real-time Persistence Notification Badge */}
           <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-50/80 border border-emerald-200 text-slate-900 text-xs font-mono">
             <span className="flex items-center gap-2 text-emerald-700 font-bold">
@@ -193,9 +193,9 @@ export default function ImageScan() {
             </Link>
           </div>
 
-          {/* Top Verdict Banner */}
+          {/* Top Verdict Banner — Mobile Responsive */}
           <div
-            className={`p-4 rounded-xl border flex items-start justify-between gap-4 ${
+            className={`p-4 rounded-xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
               result.isFake
                 ? 'bg-red-50/80 border-red-200 text-red-900'
                 : 'bg-emerald-50/80 border-emerald-200 text-emerald-900'
@@ -208,7 +208,7 @@ export default function ImageScan() {
                 <ShieldCheck size={28} className="text-emerald-600 shrink-0 mt-0.5" />
               )}
               <div>
-                <h3 className="text-lg font-black tracking-tight">
+                <h3 className="text-base sm:text-lg font-black tracking-tight">
                   {result.isFake
                     ? 'Phishing Visual Clone Detected (Impersonation)'
                     : 'Legitimate Visual Document — No Deception Flags'}
@@ -225,7 +225,7 @@ export default function ImageScan() {
               </div>
             </div>
 
-            <div className="text-right shrink-0">
+            <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200/60 shrink-0">
               <span className="text-[10px] uppercase font-bold tracking-wider opacity-70">Threat Risk</span>
               <div className={`text-2xl font-black font-mono ${result.isFake ? 'text-red-600' : 'text-emerald-600'}`}>
                 {result.riskScore}/100

@@ -40,9 +40,9 @@ export default function Header() {
           )}
         </div>
 
-        {/* Mobile Hamburger */}
+        {/* Mobile Hamburger (Min 44x44px touch target) */}
         <button
-          className="md:hidden btn-ghost"
+          className="md:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-slate-100/90 hover:bg-orange-50 hover:text-orange-600 text-slate-700 border border-slate-200 transition-all cursor-pointer active:scale-95"
           onClick={() => setOpen(!open)}
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
@@ -51,20 +51,63 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Dropdown */}
       {open && (
-        <nav className="md:hidden glass border-t border-[var(--color-border)] px-4 py-4 space-y-2" aria-label="Mobile navigation">
-          <a href="#cyber-attacks" className="block btn-ghost w-full text-left font-semibold text-orange-600" onClick={() => setOpen(false)}>Cyber Attacks Portal</a>
-          <a href="#tools" className="block btn-ghost w-full text-left" onClick={() => setOpen(false)}>Tools</a>
-          <a href="#features" className="block btn-ghost w-full text-left" onClick={() => setOpen(false)}>Features</a>
-          <a href="#how-it-works" className="block btn-ghost w-full text-left" onClick={() => setOpen(false)}>How it works</a>
-          <div className="flex gap-3 pt-3 border-t border-[var(--color-border)]">
+        <nav className="md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-200 px-4 py-5 space-y-2 shadow-2xl animate-in slide-in-from-top-3 duration-200" aria-label="Mobile navigation">
+          <a
+            href="#cyber-attacks"
+            className="flex items-center min-h-[44px] px-3.5 rounded-xl font-bold text-orange-600 bg-orange-50/70 border border-orange-200/50"
+            onClick={() => setOpen(false)}
+          >
+            Cyber Attacks Portal
+          </a>
+          <a
+            href="#tools"
+            className="flex items-center min-h-[44px] px-3.5 rounded-xl text-slate-700 font-semibold hover:bg-slate-100 active:bg-slate-200 transition-colors"
+            onClick={() => setOpen(false)}
+          >
+            Defense Tools
+          </a>
+          <a
+            href="#features"
+            className="flex items-center min-h-[44px] px-3.5 rounded-xl text-slate-700 font-semibold hover:bg-slate-100 active:bg-slate-200 transition-colors"
+            onClick={() => setOpen(false)}
+          >
+            Features & AI Engine
+          </a>
+          <a
+            href="#how-it-works"
+            className="flex items-center min-h-[44px] px-3.5 rounded-xl text-slate-700 font-semibold hover:bg-slate-100 active:bg-slate-200 transition-colors"
+            onClick={() => setOpen(false)}
+          >
+            How It Works
+          </a>
+
+          <div className="pt-3 border-t border-slate-200 flex flex-col sm:flex-row gap-2.5">
             {isAuthenticated ? (
-              <Link to="/dashboard" className="btn-primary text-sm flex-1 text-center" onClick={() => setOpen(false)}>Dashboard</Link>
+              <Link
+                to="/dashboard"
+                className="btn-primary min-h-[44px] text-sm flex-1 text-center font-bold flex items-center justify-center gap-2 shadow-sm"
+                onClick={() => setOpen(false)}
+              >
+                <User size={16} /> Open Dashboard
+              </Link>
             ) : (
               <>
-                <Link to="/login" className="btn-secondary text-sm flex-1 text-center" onClick={() => setOpen(false)}>Log in</Link>
-                <Link to="/signup" className="btn-primary text-sm flex-1 text-center" onClick={() => setOpen(false)}>Get Started</Link>
+                <Link
+                  to="/login"
+                  className="btn-secondary min-h-[44px] text-sm flex-1 text-center font-semibold flex items-center justify-center"
+                  onClick={() => setOpen(false)}
+                >
+                  Log In
+                </Link>
+                <Link
+                  to="/signup"
+                  className="btn-primary min-h-[44px] text-sm flex-1 text-center font-bold flex items-center justify-center shadow-sm"
+                  onClick={() => setOpen(false)}
+                >
+                  Get Started Free
+                </Link>
               </>
             )}
           </div>

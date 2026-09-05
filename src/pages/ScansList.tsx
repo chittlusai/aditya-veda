@@ -158,9 +158,9 @@ export default function ScansList() {
           )}
         </div>
 
-        {/* Category Filters */}
-        <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono font-bold">
-          <span className="text-slate-400 mr-1 flex items-center gap-1">
+        {/* Category Filters — Mobile Touch Scrollable */}
+        <div className="flex items-center gap-1.5 text-xs font-mono font-bold overflow-x-auto no-scrollbar max-w-full pb-1">
+          <span className="text-slate-400 mr-1 flex items-center gap-1 shrink-0">
             <Filter size={13} /> TYPE:
           </span>
           {['ALL', 'URL', 'MESSAGE', 'QR', 'SCREENSHOT', 'WEBSITE', 'SOCIAL'].map((type) => (
@@ -168,7 +168,7 @@ export default function ScansList() {
               key={type}
               type="button"
               onClick={() => setTypeFilter(type)}
-              className={`px-2.5 py-1 rounded-lg border transition-all cursor-pointer ${
+              className={`px-2.5 py-1 rounded-lg border transition-all cursor-pointer shrink-0 ${
                 typeFilter === type
                   ? 'bg-orange-600 text-white border-orange-600 shadow-xs'
                   : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
@@ -180,15 +180,15 @@ export default function ScansList() {
         </div>
       </div>
 
-      {/* Verdict Filter Bar */}
-      <div className="flex items-center gap-2 text-xs font-mono px-1">
-        <span className="text-slate-500 font-bold">VERDICT:</span>
+      {/* Verdict Filter Bar — Mobile Touch Scrollable */}
+      <div className="flex items-center gap-2 text-xs font-mono px-1 overflow-x-auto no-scrollbar max-w-full pb-1">
+        <span className="text-slate-500 font-bold shrink-0">VERDICT:</span>
         {(['ALL', 'MALICIOUS', 'SUSPICIOUS', 'CLEAN'] as const).map((v) => (
           <button
             key={v}
             type="button"
             onClick={() => setVerdictFilter(v)}
-            className={`px-3 py-1 rounded-full border transition cursor-pointer font-bold ${
+            className={`px-3 py-1 rounded-full border transition cursor-pointer font-bold shrink-0 ${
               verdictFilter === v
                 ? v === 'MALICIOUS'
                   ? 'bg-red-600 text-white border-red-600 shadow-xs'
@@ -205,7 +205,7 @@ export default function ScansList() {
         ))}
       </div>
 
-      {/* ── Main Scans Table ────────────────────────── */}
+      {/* ── Main Scans View: Mobile Cards (<md) + Desktop Table (>=md) ── */}
       <div className="rounded-2xl bg-white border border-slate-200/90 shadow-sm overflow-hidden">
         {filteredScans.length === 0 ? (
           <div className="py-16 px-4 text-center">
@@ -220,114 +220,191 @@ export default function ScansList() {
             </p>
             <button
               onClick={() => navigate('/scan/url')}
-              className="btn-primary text-xs px-4 py-2 rounded-xl font-bold cursor-pointer"
+              className="btn-primary text-xs px-4 py-2.5 rounded-xl font-bold cursor-pointer"
             >
               Launch URL Scanner
             </button>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead>
-                <tr className="border-b border-slate-100 bg-slate-50/70 text-[11px] font-mono text-slate-500 uppercase tracking-wider">
-                  <th className="px-5 py-3.5 font-bold">Type</th>
-                  <th className="px-5 py-3.5 font-bold">Investigated Target</th>
-                  <th className="px-5 py-3.5 font-bold">Threat Classification</th>
-                  <th className="px-5 py-3.5 font-bold">Risk Assessment</th>
-                  <th className="px-5 py-3.5 font-bold hidden md:table-cell">Timestamp</th>
-                  <th className="px-5 py-3.5 font-bold text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 font-mono">
-                {filteredScans.map((scan) => {
-                  const isMal = scan.verdict === 'MALICIOUS';
-                  const isSus = scan.verdict === 'SUSPICIOUS';
+          <>
+            {/* Mobile Card List (<md) */}
+            <div className="md:hidden divide-y divide-slate-100 font-mono">
+              {filteredScans.map((scan) => {
+                const isMal = scan.verdict === 'MALICIOUS';
+                const isSus = scan.verdict === 'SUSPICIOUS';
 
-                  return (
-                    <tr
-                      key={scan.id}
-                      onClick={() => setSelectedScan(scan)}
-                      className="hover:bg-orange-50/40 transition-colors cursor-pointer group"
-                    >
-                      {/* Type Badge */}
-                      <td className="px-5 py-3.5">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-800 text-xs font-bold">
-                          {getTypeIcon(scan.type)}
-                          {scan.type}
-                        </span>
-                      </td>
+                return (
+                  <div
+                    key={scan.id}
+                    onClick={() => setSelectedScan(scan)}
+                    className="p-4 space-y-2.5 hover:bg-orange-50/30 transition-colors cursor-pointer active:bg-orange-50/60"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-800 text-xs font-bold">
+                        {getTypeIcon(scan.type)}
+                        {scan.type}
+                      </span>
+                      <span
+                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
+                          isMal
+                            ? 'bg-red-50 text-red-700 border border-red-200'
+                            : isSus
+                            ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                            : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                        }`}
+                      >
+                        {isMal ? (
+                          <ShieldAlert size={12} />
+                        ) : isSus ? (
+                          <AlertTriangle size={12} />
+                        ) : (
+                          <CheckCircle2 size={12} />
+                        )}
+                        {scan.risk}/100 • {scan.verdict}
+                      </span>
+                    </div>
 
-                      {/* Target String */}
-                      <td className="px-5 py-3.5">
-                        <div className="max-w-[240px] sm:max-w-[320px] truncate font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
-                          {scan.target}
-                        </div>
-                      </td>
+                    <div className="text-xs font-bold text-slate-900 truncate">
+                      {scan.target}
+                    </div>
 
-                      {/* Threat Classification */}
-                      <td className="px-5 py-3.5">
-                        <span className="text-xs text-slate-600 truncate block max-w-[200px]">
-                          {scan.threatName}
-                        </span>
-                      </td>
+                    <div className="text-[11px] text-slate-500 truncate">
+                      {scan.threatName}
+                    </div>
 
-                      {/* Risk Score */}
-                      <td className="px-5 py-3.5">
-                        <span
-                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold ${
-                            isMal
-                              ? 'bg-red-50 text-red-700 border border-red-200'
-                              : isSus
-                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                              : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                          }`}
+                    <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-xs">
+                      <span className="text-slate-400 text-[10px]">{scan.date}</span>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedScan(scan);
+                          }}
+                          className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] transition cursor-pointer flex items-center gap-1"
                         >
-                          {isMal ? (
-                            <ShieldAlert size={12} />
-                          ) : isSus ? (
-                            <AlertTriangle size={12} />
-                          ) : (
-                            <CheckCircle2 size={12} />
-                          )}
-                          {scan.risk}/100 • {scan.verdict}
-                        </span>
-                      </td>
+                          <ExternalLink size={12} />
+                          Details
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => handleDelete(scan.id, e)}
+                          className="p-1.5 rounded-lg bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-600 transition cursor-pointer"
+                          title="Delete scan"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
-                      {/* Date */}
-                      <td className="px-5 py-3.5 text-slate-400 text-xs hidden md:table-cell">
-                        {scan.date}
-                      </td>
+            {/* Desktop Table (>=md) */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead>
+                  <tr className="border-b border-slate-100 bg-slate-50/70 text-[11px] font-mono text-slate-500 uppercase tracking-wider">
+                    <th className="px-5 py-3.5 font-bold">Type</th>
+                    <th className="px-5 py-3.5 font-bold">Investigated Target</th>
+                    <th className="px-5 py-3.5 font-bold">Threat Classification</th>
+                    <th className="px-5 py-3.5 font-bold">Risk Assessment</th>
+                    <th className="px-5 py-3.5 font-bold hidden md:table-cell">Timestamp</th>
+                    <th className="px-5 py-3.5 font-bold text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 font-mono">
+                  {filteredScans.map((scan) => {
+                    const isMal = scan.verdict === 'MALICIOUS';
+                    const isSus = scan.verdict === 'SUSPICIOUS';
 
-                      {/* Actions */}
-                      <td className="px-5 py-3.5 text-right">
-                        <div className="flex items-center justify-end gap-1.5">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedScan(scan);
-                            }}
-                            className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 transition cursor-pointer"
-                            title="Inspect Technical Telemetry"
+                    return (
+                      <tr
+                        key={scan.id}
+                        onClick={() => setSelectedScan(scan)}
+                        className="hover:bg-orange-50/40 transition-colors cursor-pointer group"
+                      >
+                        {/* Type Badge */}
+                        <td className="px-5 py-3.5">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-800 text-xs font-bold">
+                            {getTypeIcon(scan.type)}
+                            {scan.type}
+                          </span>
+                        </td>
+
+                        {/* Target String */}
+                        <td className="px-5 py-3.5">
+                          <div className="max-w-[240px] sm:max-w-[320px] truncate font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
+                            {scan.target}
+                          </div>
+                        </td>
+
+                        {/* Threat Classification */}
+                        <td className="px-5 py-3.5">
+                          <span className="text-xs text-slate-600 truncate block max-w-[200px]">
+                            {scan.threatName}
+                          </span>
+                        </td>
+
+                        {/* Risk Score */}
+                        <td className="px-5 py-3.5">
+                          <span
+                            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold ${
+                              isMal
+                                ? 'bg-red-50 text-red-700 border border-red-200'
+                                : isSus
+                                ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                                : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                            }`}
                           >
-                            <ExternalLink size={14} />
-                          </button>
-                          <button
-                            type="button"
-                            onClick={(e) => handleDelete(scan.id, e)}
-                            className="p-1.5 rounded-lg bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-600 transition cursor-pointer"
-                            title="Delete scan from history"
-                          >
-                            <Trash2 size={14} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                            {isMal ? (
+                              <ShieldAlert size={12} />
+                            ) : isSus ? (
+                              <AlertTriangle size={12} />
+                            ) : (
+                              <CheckCircle2 size={12} />
+                            )}
+                            {scan.risk}/100 • {scan.verdict}
+                          </span>
+                        </td>
+
+                        {/* Date */}
+                        <td className="px-5 py-3.5 text-slate-400 text-xs hidden md:table-cell">
+                          {scan.date}
+                        </td>
+
+                        {/* Actions */}
+                        <td className="px-5 py-3.5 text-right">
+                          <div className="flex items-center justify-end gap-1.5">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedScan(scan);
+                              }}
+                              className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 transition cursor-pointer"
+                              title="Inspect Technical Telemetry"
+                            >
+                              <ExternalLink size={14} />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={(e) => handleDelete(scan.id, e)}
+                              className="p-1.5 rounded-lg bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-600 transition cursor-pointer"
+                              title="Delete scan from history"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 

@@ -141,7 +141,7 @@ export default function UrlScan() {
             <button
               type="submit"
               disabled={status === 'scanning'}
-              className="btn-primary px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-50"
+              className="btn-primary w-full sm:w-auto px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-50 min-h-[44px]"
             >
               {status === 'scanning' ? (
                 <>
@@ -253,9 +253,9 @@ export default function UrlScan() {
             </Link>
           </div>
 
-          {/* Top Verdict Banner */}
+          {/* Top Verdict Banner — Mobile Responsive */}
           <div
-            className={`p-4 rounded-xl border flex items-start justify-between gap-4 ${
+            className={`p-4 rounded-xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
               result.isSafe
                 ? 'bg-emerald-50/80 border-emerald-200 text-emerald-900'
                 : 'bg-red-50/80 border-red-200 text-red-900'
@@ -268,7 +268,7 @@ export default function UrlScan() {
                 <ShieldAlert size={28} className="text-red-600 shrink-0 mt-0.5" />
               )}
               <div>
-                <h3 className="text-lg font-black tracking-tight">
+                <h3 className="text-base sm:text-lg font-black tracking-tight">
                   {result.isSafe
                     ? 'Safe — No threats detected'
                     : 'Critical Warning — Threat Vector Identified'}
@@ -283,7 +283,7 @@ export default function UrlScan() {
               </div>
             </div>
 
-            <div className="text-right shrink-0">
+            <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200/60 shrink-0">
               <span className="text-[10px] uppercase font-bold tracking-wider opacity-70">Threat Risk</span>
               <div className={`text-2xl font-black font-mono ${result.isSafe ? 'text-emerald-600' : 'text-red-600'}`}>
                 {result.score}/100

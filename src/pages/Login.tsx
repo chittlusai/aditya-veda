@@ -58,7 +58,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-24 relative overflow-hidden bg-slate-50 text-slate-900">
+    <div className="min-h-screen flex items-center justify-center px-3 sm:px-4 py-12 sm:py-24 relative overflow-hidden bg-slate-50 text-slate-900">
       {/* Ambient Radial Accent Gradients */}
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -96,7 +96,7 @@ export default function Login() {
         )}
 
         {/* Main Clean Light Card */}
-        <div className="rounded-3xl bg-white border border-slate-200/90 shadow-2xl shadow-slate-200/70 overflow-hidden p-6 sm:p-8">
+        <div className="rounded-3xl bg-white border border-slate-200/90 shadow-2xl shadow-slate-200/70 overflow-hidden p-4 sm:p-8">
           {/* Card Top Telemetry Bar */}
           <div className="flex items-center justify-between pb-5 mb-6 border-b border-slate-100 text-xs">
             <div className="flex items-center gap-2 font-mono">

@@ -130,15 +130,15 @@ export default function OtpVerify() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-24 relative overflow-hidden bg-slate-50 text-slate-900">
+    <div className="min-h-screen flex items-center justify-center px-3 sm:px-4 py-12 sm:py-24 relative overflow-hidden bg-slate-50 text-slate-900">
       {/* Ambient Accent Gradients */}
       <div className="absolute top-1/4 -right-32 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 -left-32 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* ── Top-Right Floating Cyber Notification Toast ── */}
       {showToast && !isVerified && (
-        <div className="fixed top-20 right-4 sm:right-6 z-50 max-w-sm w-full animate-bounce sm:animate-none">
-          <div className="p-4 rounded-2xl bg-white border-2 border-orange-500 shadow-2xl shadow-orange-500/20 text-slate-900">
+        <div className="fixed top-16 sm:top-20 left-3 right-3 sm:left-auto sm:right-6 z-50 sm:max-w-sm w-auto animate-bounce sm:animate-none">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-orange-500 shadow-2xl shadow-orange-500/20 text-slate-900">
             <div className="flex items-start justify-between gap-3 mb-2">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded-lg bg-orange-500 text-white flex items-center justify-center shrink-0 shadow-sm">
@@ -148,7 +148,7 @@ export default function OtpVerify() {
                   <div className="text-xs font-mono font-black text-orange-600 uppercase tracking-wide">
                     ON-SCREEN DISPATCH NOTIFICATION
                   </div>
-                  <div className="text-[10px] text-slate-500 font-mono">To: {targetEmail}</div>
+                  <div className="text-[10px] text-slate-500 font-mono truncate max-w-[190px] sm:max-w-none">To: {targetEmail}</div>
                 </div>
               </div>
               <button
@@ -161,7 +161,7 @@ export default function OtpVerify() {
               </button>
             </div>
 
-            <div className="p-2.5 rounded-xl bg-orange-50/80 border border-orange-200 flex items-center justify-between mb-2.5">
+            <div className="p-2 sm:p-2.5 rounded-xl bg-orange-50/80 border border-orange-200 flex items-center justify-between mb-2.5">
               <span className="text-[11px] font-mono text-slate-600 font-medium">Security Passcode:</span>
               <span className="font-mono font-black text-xl text-orange-700 tracking-widest px-2.5 py-0.5 rounded bg-white border border-orange-300 shadow-xs">
                 {currentCode}
@@ -172,14 +172,14 @@ export default function OtpVerify() {
               <button
                 type="button"
                 onClick={handleAutoFill}
-                className="flex-1 py-1.5 px-3 rounded-lg bg-orange-600 hover:bg-orange-500 text-white text-xs font-mono font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-sm shadow-orange-500/20"
+                className="flex-1 py-2 px-3 rounded-lg bg-orange-600 hover:bg-orange-500 text-white text-xs font-mono font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-sm shadow-orange-500/20 min-h-[38px]"
               >
                 <Sparkles size={12} /> Auto-Fill Code
               </button>
               <button
                 type="button"
                 onClick={handleCopyCode}
-                className="py-1.5 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition flex items-center gap-1 cursor-pointer border border-slate-200"
+                className="py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition flex items-center gap-1 cursor-pointer border border-slate-200 min-h-[38px]"
               >
                 {copied ? <Check size={12} className="text-emerald-600 font-bold" /> : <Copy size={12} />}
                 {copied ? 'Copied' : 'Copy'}
@@ -191,41 +191,41 @@ export default function OtpVerify() {
 
       {/* ── Main Enclave Card ─────────────────────────── */}
       <div className="w-full max-w-lg relative z-10">
-        <div className="rounded-3xl bg-white border border-slate-200/90 shadow-2xl shadow-slate-200/70 overflow-hidden p-6 sm:p-8 text-slate-900">
+        <div className="rounded-3xl bg-white border border-slate-200/90 shadow-2xl shadow-slate-200/70 overflow-hidden p-4 sm:p-8 text-slate-900">
           {/* Header */}
           <div className="text-center mb-6">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-50 border border-orange-200 text-orange-600 mb-4 shadow-sm">
+            <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-orange-50 border border-orange-200 text-orange-600 mb-3 sm:mb-4 shadow-sm">
               {isVerified ? (
-                <ShieldCheck size={32} className="text-emerald-600 animate-bounce" />
+                <ShieldCheck size={30} className="text-emerald-600 animate-bounce" />
               ) : (
-                <MailCheck size={32} />
+                <MailCheck size={30} />
               )}
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            <h1 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight">
               {isVerified ? 'Identity Confirmed!' : 'Email Verification Code'}
             </h1>
-            <p className="text-slate-600 text-xs sm:text-sm mt-1.5 font-mono">
+            <p className="text-slate-600 text-xs sm:text-sm mt-1 font-mono">
               Account targeted for authorization:
             </p>
-            <div className="inline-block mt-1 px-3 py-1 rounded-lg bg-slate-100 border border-slate-200 font-mono text-xs font-bold text-orange-700">
+            <div className="inline-block mt-1 px-3 py-1 rounded-lg bg-slate-100 border border-slate-200 font-mono text-xs font-bold text-orange-700 max-w-full truncate">
               {targetEmail}
             </div>
           </div>
 
           {/* ── High-Visibility On-Screen Code Display Enclave ── */}
           {!isVerified && (
-            <div className="mb-6 p-4 rounded-2xl bg-orange-50/80 border-2 border-orange-400 shadow-md text-center">
-              <div className="flex items-center justify-center gap-1.5 text-[11px] font-mono text-orange-700 font-bold uppercase tracking-wider mb-2">
+            <div className="mb-5 sm:mb-6 p-3 sm:p-4 rounded-2xl bg-orange-50/80 border-2 border-orange-400 shadow-md text-center">
+              <div className="flex items-center justify-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-orange-700 font-bold uppercase tracking-wider mb-2">
                 <Sparkles size={13} />
                 YOUR VERIFICATION CODE (SHOWN ON WEBSITE)
               </div>
 
               {/* Glowing Digit Display */}
-              <div className="py-2.5 px-4 rounded-xl bg-white border border-orange-200 inline-flex items-center justify-center gap-2 mb-3 shadow-xs">
+              <div className="py-2 px-3 sm:px-4 rounded-xl bg-white border border-orange-200 inline-flex items-center justify-center gap-1 sm:gap-2 mb-3 shadow-xs">
                 {currentCode.split('').map((d, i) => (
                   <span
                     key={i}
-                    className="w-8 h-10 sm:w-9 sm:h-11 rounded-lg bg-orange-50 border border-orange-300 text-orange-700 font-mono font-black text-xl sm:text-2xl flex items-center justify-center shadow-xs"
+                    className="w-7 h-9 sm:w-9 sm:h-11 rounded-lg bg-orange-50 border border-orange-300 text-orange-700 font-mono font-black text-lg sm:text-2xl flex items-center justify-center shadow-xs"
                   >
                     {d}
                   </span>
@@ -236,18 +236,18 @@ export default function OtpVerify() {
                 No external email check needed — enter this code below or click Auto-Fill:
               </p>
 
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
                 <button
                   type="button"
                   onClick={handleAutoFill}
-                  className="py-2 px-4 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-mono text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-md shadow-orange-500/25"
+                  className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-mono text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-md shadow-orange-500/25 min-h-[40px]"
                 >
                   <Sparkles size={13} /> Auto-Fill Code ({currentCode})
                 </button>
                 <button
                   type="button"
                   onClick={handleCopyCode}
-                  className="py-2 px-3 rounded-xl bg-white hover:bg-slate-50 text-slate-700 font-mono text-xs font-medium transition flex items-center gap-1.5 cursor-pointer border border-slate-300 shadow-xs"
+                  className="w-full sm:w-auto py-2.5 px-3 rounded-xl bg-white hover:bg-slate-50 text-slate-700 font-mono text-xs font-medium transition flex items-center justify-center gap-1.5 cursor-pointer border border-slate-300 shadow-xs min-h-[40px]"
                 >
                   {copied ? <Check size={13} className="text-emerald-600 font-bold" /> : <Copy size={13} />}
                   {copied ? 'Copied' : 'Copy Code'}
@@ -271,7 +271,7 @@ export default function OtpVerify() {
             </div>
 
             {/* 6 Digit Input Boxes */}
-            <div className="flex justify-center gap-2 sm:gap-3 mb-6" onPaste={handlePaste}>
+            <div className="flex justify-center gap-1.5 sm:gap-3 mb-6" onPaste={handlePaste}>
               {code.map((digit, i) => (
                 <input
                   key={i}
@@ -285,7 +285,7 @@ export default function OtpVerify() {
                   value={digit}
                   onChange={(e) => handleChange(i, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(i, e)}
-                  className={`w-11 h-14 sm:w-13 sm:h-16 rounded-xl border text-center text-xl sm:text-2xl font-black font-mono outline-none transition-all ${
+                  className={`w-9 h-12 sm:w-13 sm:h-16 rounded-xl border text-center text-lg sm:text-2xl font-black font-mono outline-none transition-all ${
                     isVerified
                       ? 'border-emerald-500 text-emerald-700 bg-emerald-50'
                       : digit
@@ -300,7 +300,7 @@ export default function OtpVerify() {
             <button
               type="submit"
               disabled={isVerifying || isVerified}
-              className={`w-full py-3.5 px-4 rounded-xl font-mono font-bold text-sm tracking-wide transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 ${
+              className={`w-full py-3.5 px-4 min-h-[46px] rounded-xl font-mono font-bold text-sm tracking-wide transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 ${
                 isVerified
                   ? 'bg-emerald-600 text-white'
                   : 'bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white shadow-lg shadow-orange-500/25'

@@ -144,7 +144,7 @@ export default function WebsiteScan() {
             <button
               type="submit"
               disabled={status === 'scanning'}
-              className="px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-50 font-mono text-sm"
+              className="px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-50 font-mono text-sm w-full sm:w-auto min-h-[44px]"
             >
               {status === 'scanning' ? (
                 <>
@@ -271,7 +271,7 @@ export default function WebsiteScan() {
                 <ShieldCheck size={28} className="text-emerald-600 shrink-0 mt-0.5" />
               )}
               <div>
-                <h3 className="text-lg font-black tracking-tight">
+                <h3 className="text-base sm:text-lg font-black tracking-tight">
                   {result.isFake
                     ? 'Deceptive / Counterfeit Website Detected'
                     : 'Legitimate Authoritative Website'}
@@ -286,7 +286,7 @@ export default function WebsiteScan() {
               </div>
             </div>
 
-            <div className="text-right shrink-0">
+            <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200/60 shrink-0">
               <span className="text-[10px] uppercase font-bold tracking-wider opacity-70">Threat Risk</span>
               <div className={`text-2xl font-black font-mono ${result.isFake ? 'text-red-600' : 'text-emerald-600'}`}>
                 {result.riskScore}/100

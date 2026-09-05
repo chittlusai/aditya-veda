@@ -141,7 +141,7 @@ export default function MessageScan() {
             <button
               type="submit"
               disabled={status === 'scanning'}
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-50 font-mono text-sm"
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-50 font-mono text-sm min-h-[44px]"
             >
               {status === 'scanning' ? (
                 <>
@@ -165,13 +165,13 @@ export default function MessageScan() {
           <div className="flex items-center justify-between text-sky-600 font-bold">
             <span className="flex items-center gap-2">
               <Loader2 size={16} className="animate-spin text-sky-500" />
-              RUNNING REAL-TIME NLP SOCIAL ENGINEERING SCANNER
+              EXECUTING NATURAL LANGUAGE HEURISTIC & URGENCY DECONSTRUCTION
             </span>
-            <span className="text-[10px] bg-slate-100 px-2 py-0.5 rounded text-slate-600 border border-slate-200 font-bold">SEMANTIC v3.2</span>
+            <span className="text-[10px] bg-slate-100 px-2 py-0.5 rounded text-slate-600 border border-slate-200 font-bold">LIVE TELEMETRY</span>
           </div>
-          <p className="text-slate-600">Evaluating urgency coefficients, emotional manipulation vectors, and credential harvesting intent...</p>
+          <p className="text-slate-600">Cross-referencing psychological coercion vectors, domain spoofing, and wire fraud templates...</p>
           <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
-            <div className="bg-sky-500 h-full w-3/4 animate-pulse" />
+            <div className="bg-sky-500 h-full w-4/5 animate-pulse" />
           </div>
         </div>
       )}
@@ -192,9 +192,9 @@ export default function MessageScan() {
             </Link>
           </div>
 
-          {/* Top Verdict Banner */}
+          {/* Top Verdict Banner — Mobile Responsive */}
           <div
-            className={`p-4 rounded-xl border flex items-start justify-between gap-4 ${
+            className={`p-4 rounded-xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
               !result.isSafe
                 ? 'bg-red-50/80 border-red-200 text-red-900'
                 : 'bg-emerald-50/80 border-emerald-200 text-emerald-900'
@@ -207,7 +207,7 @@ export default function MessageScan() {
                 <ShieldCheck size={28} className="text-emerald-600 shrink-0 mt-0.5" />
               )}
               <div>
-                <h3 className="text-lg font-black tracking-tight">
+                <h3 className="text-base sm:text-lg font-black tracking-tight">
                   {!result.isSafe
                     ? 'Social Engineering & Scam Tactics Detected'
                     : 'Clean Message — No Coercive Patterns Detected'}
@@ -222,7 +222,7 @@ export default function MessageScan() {
               </div>
             </div>
 
-            <div className="text-right shrink-0">
+            <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200/60 shrink-0">
               <span className="text-[10px] uppercase font-bold tracking-wider opacity-70">Threat Risk</span>
               <div className={`text-2xl font-black font-mono ${!result.isSafe ? 'text-red-600' : 'text-emerald-600'}`}>
                 {result.riskScore}/100

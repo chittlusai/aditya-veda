@@ -115,26 +115,104 @@ export default function SidebarLayout({ children }: { children: ReactNode }) {
       {/* Mobile sidebar overlay */}
       {open && (
         <>
-          <div className="fixed inset-0 bg-black/60 z-40 md:hidden" onClick={() => setOpen(false)} />
-          <aside className="fixed inset-y-0 left-0 w-64 flex flex-col bg-[var(--color-background-elevated)] border-r border-[var(--color-border)] z-50 md:hidden">
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40 md:hidden" onClick={() => setOpen(false)} />
+          <aside className="fixed inset-y-0 left-0 w-[82vw] max-w-xs flex flex-col bg-white border-r border-slate-200 z-50 md:hidden shadow-2xl animate-in slide-in-from-left duration-250">
             {sidebar}
           </aside>
         </>
       )}
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden relative">
         {/* Mobile top bar */}
-        <div className="md:hidden h-14 border-b border-[var(--color-border)] flex items-center px-4 bg-[var(--color-background-elevated)] shrink-0">
-          <button onClick={() => setOpen(true)} className="btn-ghost p-1 mr-3" aria-label="Open sidebar">
-            <Menu size={20} />
-          </button>
-          <span className="font-bold text-sm">PHISHGUARD<span className="gradient-text">AI</span></span>
+        <div className="md:hidden h-14 border-b border-slate-200 flex items-center justify-between px-3 bg-white/95 backdrop-blur-md shrink-0 z-20">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setOpen(true)}
+              className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 transition cursor-pointer"
+              aria-label="Open sidebar"
+            >
+              <Menu size={20} />
+            </button>
+            <span className="font-bold text-sm tracking-tight">PHISHGUARD<span className="gradient-text">AI</span></span>
+          </div>
+
+          <Link
+            to="/profile"
+            className="w-8 h-8 rounded-lg bg-orange-500 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs"
+          >
+            {(user?.name || 'CS').charAt(0).toUpperCase()}
+          </Link>
         </div>
 
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8" role="main">
+        {/* Content viewport with safe-area bottom offset */}
+        <main className="flex-1 overflow-y-auto p-3.5 sm:p-6 lg:p-8 pb-24 md:pb-8" role="main">
           {children}
         </main>
+
+        {/* ── Mobile Bottom Navigation Bar (Thumb Friendly) ── */}
+        <nav
+          className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200/90 px-2 py-1.5 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.06)] flex items-center justify-around"
+          aria-label="Mobile quick navigation"
+        >
+          <Link
+            to="/dashboard"
+            className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all min-w-[56px] min-h-[44px] ${
+              pathname === '/dashboard'
+                ? 'text-orange-600 font-bold bg-orange-50/70'
+                : 'text-slate-600 hover:text-slate-900 active:bg-slate-100'
+            }`}
+          >
+            <LayoutDashboard size={18} />
+            <span className="text-[10px] mt-0.5 tracking-tight">Dashboard</span>
+          </Link>
+
+          <Link
+            to="/scan/url"
+            className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all min-w-[56px] min-h-[44px] ${
+              pathname === '/scan/url'
+                ? 'text-orange-600 font-bold bg-orange-50/70'
+                : 'text-slate-600 hover:text-slate-900 active:bg-slate-100'
+            }`}
+          >
+            <Search size={18} />
+            <span className="text-[10px] mt-0.5 tracking-tight">Scan URL</span>
+          </Link>
+
+          <Link
+            to="/threats"
+            className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all min-w-[56px] min-h-[44px] ${
+              pathname === '/threats'
+                ? 'text-orange-600 font-bold bg-orange-50/70'
+                : 'text-slate-600 hover:text-slate-900 active:bg-slate-100'
+            }`}
+          >
+            <ShieldAlert size={18} />
+            <span className="text-[10px] mt-0.5 tracking-tight">Intel</span>
+          </Link>
+
+          <Link
+            to="/scans"
+            className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all min-w-[56px] min-h-[44px] ${
+              pathname === '/scans'
+                ? 'text-orange-600 font-bold bg-orange-50/70'
+                : 'text-slate-600 hover:text-slate-900 active:bg-slate-100'
+            }`}
+          >
+            <History size={18} />
+            <span className="text-[10px] mt-0.5 tracking-tight">History</span>
+          </Link>
+
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-600 hover:text-slate-900 active:bg-slate-100 transition-all min-w-[56px] min-h-[44px] cursor-pointer"
+            aria-label="Open all scanners drawer"
+          >
+            <Menu size={18} />
+            <span className="text-[10px] mt-0.5 tracking-tight">Tools</span>
+          </button>
+        </nav>
       </div>
     </div>
   );

@@ -12,7 +12,6 @@ import { useAuth } from '../context/AuthContext';
 import { Reveal, SectionHeader, ScrollIndicator } from '../components/ui';
 import {
   CountUp,
-  Magnet,
   StarBorder,
   BlurText,
   Tilted3DCard,
@@ -280,13 +279,13 @@ export default function Landing() {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="text-[clamp(2.5rem,6vw,5.25rem)] font-black tracking-tight leading-[1.12] mb-6 text-slate-900"
+            className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] mb-5 text-slate-900"
           >
             Check before you trust.
             <br />
             <span className="inline-flex items-center flex-wrap justify-center gap-2">
               Defend against{' '}
-              <span className="inline-block min-w-[280px] sm:min-w-[360px] text-center">
+              <span className="inline-block min-w-0 w-full sm:w-auto sm:min-w-[320px] text-center">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={attackIndex}
@@ -312,7 +311,7 @@ export default function Landing() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25 }}
-            className="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed font-normal"
+            className="text-sm sm:text-base md:text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed font-normal px-2"
           >
             Instantly detect phishing traps, deceptive QR codes, credential stealers, and counterfeit websites.
             Trained on millions of live threat vectors with millisecond defense reactions.
@@ -323,34 +322,36 @@ export default function Landing() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="max-w-2xl mx-auto mb-8 w-full"
+            className="max-w-2xl mx-auto mb-8 w-full px-2"
           >
             <StarBorder color="#f97316" speed="4.5s" className="w-full">
               <form
                 onSubmit={handleQuickScanSubmit}
-                className="relative flex items-center bg-white rounded-2xl p-2 transition-all"
+                className="relative flex flex-col sm:flex-row items-stretch sm:items-center bg-white rounded-2xl p-2 sm:p-2.5 gap-2 transition-all shadow-sm"
               >
-                <Search className="text-slate-400 ml-3 shrink-0" size={20} />
-                <input
-                  type="text"
-                  value={quickScanUrl}
-                  onChange={(e) => setQuickScanUrl(e.target.value)}
-                  placeholder="Paste suspicious URL, domain, or message to inspect..."
-                  className="w-full bg-transparent px-3 py-2.5 text-sm sm:text-base text-slate-800 placeholder-slate-400 outline-none"
-                />
-                <Magnet padding={40} magnetStrength={2.5}>
+                <div className="flex items-center flex-1 min-w-0 px-2.5 py-1">
+                  <Search className="text-slate-400 mr-2 shrink-0" size={18} />
+                  <input
+                    type="text"
+                    value={quickScanUrl}
+                    onChange={(e) => setQuickScanUrl(e.target.value)}
+                    placeholder="Paste suspicious URL, domain, or message..."
+                    className="w-full bg-transparent py-1.5 text-sm sm:text-base text-slate-800 placeholder-slate-400 outline-none font-mono"
+                  />
+                </div>
+                <div className="w-full sm:w-auto shrink-0">
                   <button
                     type="submit"
-                    className="btn-primary text-xs sm:text-sm px-5 py-3 rounded-xl shrink-0 font-semibold shadow-md cursor-pointer"
+                    className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-5 py-3 rounded-xl font-bold shadow-md cursor-pointer justify-center min-h-[44px]"
                   >
                     Inspect Threat
                     <ArrowRight size={16} />
                   </button>
-                </Magnet>
+                </div>
               </form>
             </StarBorder>
 
-            <div className="flex flex-wrap items-center justify-center gap-2 mt-3 text-xs text-slate-500">
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-3 text-xs text-slate-500 px-1">
               <span className="font-medium text-slate-400">Quick test:</span>
               <button
                 type="button"
@@ -380,7 +381,7 @@ export default function Landing() {
             <div className="relative rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-xl ring-1 ring-slate-200 group">
 
               {/* Showcase Window Top Bar */}
-              <div className="flex items-center justify-between px-4 py-3 bg-slate-100 border-b border-slate-200">
+              <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-slate-100 border-b border-slate-200">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500/80" />
                   <div className="w-3 h-3 rounded-full bg-amber-500/80" />
@@ -389,34 +390,34 @@ export default function Landing() {
                     veo3-neural-defense-stream.mp4
                   </span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-mono font-semibold border border-emerald-300">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <span className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] sm:text-[11px] font-mono font-semibold border border-emerald-300">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
                     LIVE 60 FPS
                   </span>
-                  <div className="flex items-center gap-1.5 border-l border-slate-200 pl-2">
+                  <div className="flex items-center gap-1 border-l border-slate-200 pl-1.5 sm:pl-2">
                     <button
                       type="button"
                       onClick={toggleVideoPlay}
-                      className="p-1 rounded-md bg-white hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-200 transition cursor-pointer"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-white hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-200 transition cursor-pointer active:scale-95"
                       title={isVideoPlaying ? 'Pause Video' : 'Play Video'}
                     >
-                      {isVideoPlaying ? <Pause size={13} /> : <Play size={13} />}
+                      {isVideoPlaying ? <Pause size={14} /> : <Play size={14} />}
                     </button>
                     <button
                       type="button"
                       onClick={toggleVideoMute}
-                      className="p-1 rounded-md bg-white hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-200 transition cursor-pointer"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-white hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-200 transition cursor-pointer active:scale-95"
                       title={isVideoMuted ? 'Unmute Audio' : 'Mute Audio'}
                     >
-                      {isVideoMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
+                      {isVideoMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Video Player Display Container */}
-              <div className="relative aspect-video w-full bg-slate-950 overflow-hidden">
+              {/* Video Player Display Container — 16:9 Mobile & Desktop Ratio */}
+              <div className="relative aspect-video w-full bg-slate-950 overflow-hidden ratio-16-9">
                 <video
                   ref={videoRef}
                   autoPlay
@@ -430,60 +431,60 @@ export default function Landing() {
                 </video>
 
                 {/* Subtle Cinematic Vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-slate-950/30 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-slate-950/30 pointer-events-none" />
 
                 {/* Top Floating HUD Badges */}
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-                  <div className="glass px-3 py-1.5 rounded-xl border border-white/10 bg-slate-900/75 text-orange-400 text-xs font-mono font-bold flex items-center gap-2 backdrop-blur-md shadow-md">
-                    <Activity size={14} className="animate-pulse" />
-                    NEURAL THREAT DETECTOR
+                <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 flex items-center justify-between pointer-events-none gap-1">
+                  <div className="glass px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl border border-white/10 bg-slate-900/80 text-orange-400 text-[10px] sm:text-xs font-mono font-bold flex items-center gap-1.5 backdrop-blur-md shadow-md">
+                    <Activity size={12} className="animate-pulse shrink-0" />
+                    <span>NEURAL THREAT DETECTOR</span>
                   </div>
-                  <div className="glass px-3 py-1.5 rounded-xl border border-emerald-500/30 bg-slate-900/75 text-emerald-400 text-xs font-mono font-bold flex items-center gap-2 backdrop-blur-md shadow-md">
-                    <ShieldCheck size={14} />
-                    SHIELD: ACTIVE
+                  <div className="glass px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl border border-emerald-500/30 bg-slate-900/80 text-emerald-400 text-[10px] sm:text-xs font-mono font-bold flex items-center gap-1.5 backdrop-blur-md shadow-md">
+                    <ShieldCheck size={12} className="shrink-0" />
+                    <span>SHIELD: ACTIVE</span>
                   </div>
                 </div>
 
                 {/* Interactive Simulated Attack Alert Banner */}
                 {activeAttackSimulation && (
-                  <div className="absolute inset-x-4 top-16 bg-red-950/90 border border-red-500 text-red-100 p-3 rounded-xl backdrop-blur-md shadow-2xl flex items-center justify-between text-xs font-mono animate-in fade-in slide-in-from-top-2 duration-300 z-20">
-                    <div className="flex items-center gap-2.5">
-                      <ShieldAlert size={18} className="text-red-400 animate-bounce" />
-                      <div>
-                        <div className="font-bold text-red-200 uppercase tracking-wider">DEFENSE ENGAGED: {activeAttackSimulation}</div>
-                        <div className="text-[11px] text-red-300">Neural defense matrix intercepted attack signature • Zero damage verified.</div>
+                  <div className="absolute inset-x-2 sm:inset-x-4 top-12 sm:top-16 bg-red-950/95 border border-red-500 text-red-100 p-2.5 sm:p-3 rounded-xl backdrop-blur-md shadow-2xl flex items-center justify-between text-xs font-mono animate-in fade-in slide-in-from-top-2 duration-300 z-20">
+                    <div className="flex items-center gap-2">
+                      <ShieldAlert size={16} className="text-red-400 animate-bounce shrink-0" />
+                      <div className="min-w-0">
+                        <div className="font-bold text-red-200 uppercase tracking-wider text-[11px] truncate">DEFENSE ENGAGED: {activeAttackSimulation}</div>
+                        <div className="text-[10px] text-red-300 hidden sm:block">Neural defense matrix intercepted attack signature • Zero damage verified.</div>
                       </div>
                     </div>
-                    <span className="bg-red-900/80 px-2 py-0.5 rounded text-emerald-300 font-bold border border-red-700/60">
+                    <span className="bg-red-900/80 px-2 py-0.5 rounded text-emerald-300 font-bold border border-red-700/60 text-[10px] sm:text-xs shrink-0">
                       NEUTRALIZED 100%
                     </span>
                   </div>
                 )}
 
-                {/* Bottom Telemetry HUD */}
-                <div className="absolute bottom-4 inset-x-4 grid grid-cols-3 gap-2 sm:gap-3 pointer-events-none">
-                  <div className="glass px-3 py-2 rounded-xl bg-slate-900/80 border border-white/10 text-left backdrop-blur-md">
-                    <div className="text-[10px] uppercase font-mono font-bold text-slate-400">Neural Confidence</div>
-                    <div className="text-sm sm:text-base font-mono font-black text-white">99.8%</div>
+                {/* Bottom Telemetry HUD — Mobile Friendly Ratio */}
+                <div className="absolute bottom-2 sm:bottom-4 inset-x-2 sm:inset-x-4 grid grid-cols-3 gap-1.5 sm:gap-3 pointer-events-none">
+                  <div className="glass px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-slate-900/85 border border-white/10 text-left backdrop-blur-md">
+                    <div className="text-[8px] sm:text-[10px] uppercase font-mono font-bold text-slate-400 truncate">Confidence</div>
+                    <div className="text-xs sm:text-base font-mono font-black text-white">99.8%</div>
                   </div>
-                  <div className="glass px-3 py-2 rounded-xl bg-slate-900/80 border border-white/10 text-left backdrop-blur-md">
-                    <div className="text-[10px] uppercase font-mono font-bold text-slate-400">Threat Interception</div>
-                    <div className="text-sm sm:text-base font-mono font-black text-emerald-400 truncate">Zero-Day Neutralized</div>
+                  <div className="glass px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-slate-900/85 border border-white/10 text-left backdrop-blur-md">
+                    <div className="text-[8px] sm:text-[10px] uppercase font-mono font-bold text-slate-400 truncate">Interception</div>
+                    <div className="text-xs sm:text-base font-mono font-black text-emerald-400 truncate">Zero-Day Block</div>
                   </div>
-                  <div className="glass px-3 py-2 rounded-xl bg-slate-900/80 border border-white/10 text-left backdrop-blur-md">
-                    <div className="text-[10px] uppercase font-mono font-bold text-slate-400">Reaction Latency</div>
-                    <div className="text-sm sm:text-base font-mono font-black text-orange-400">14ms</div>
+                  <div className="glass px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-slate-900/85 border border-white/10 text-left backdrop-blur-md">
+                    <div className="text-[8px] sm:text-[10px] uppercase font-mono font-bold text-slate-400 truncate">Latency</div>
+                    <div className="text-xs sm:text-base font-mono font-black text-orange-400">14ms</div>
                   </div>
                 </div>
               </div>
 
               {/* Interactive Attack Simulation Trigger Bar */}
-              <div className="px-4 py-3 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
                 <div className="flex items-center gap-2 text-slate-600">
-                  <Zap size={14} className="text-orange-500" />
+                  <Zap size={14} className="text-orange-500 shrink-0" />
                   <span className="font-mono text-[11px] font-bold uppercase tracking-wider">Simulate Attack Vectors:</span>
                 </div>
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   {[
                     { label: 'Zero-Day Exploit', attack: 'Zero-Day Memory Hijack' },
                     { label: 'Quishing QR', attack: 'Municipal Meter Quishing Trap' },
@@ -494,7 +495,7 @@ export default function Landing() {
                       key={btn.label}
                       type="button"
                       onClick={() => handleSimulateAttack(btn.attack)}
-                      className="px-2.5 py-1 rounded-lg bg-white hover:bg-orange-500 hover:text-white text-slate-700 font-mono text-[11px] font-semibold border border-slate-300 transition cursor-pointer shadow-xs"
+                      className="px-2.5 py-1.5 rounded-lg bg-white hover:bg-orange-500 hover:text-white text-slate-700 font-mono text-[11px] font-semibold border border-slate-300 transition cursor-pointer shadow-xs min-h-[36px] flex items-center justify-center active:scale-95"
                     >
                       {btn.label}
                     </button>
@@ -503,14 +504,14 @@ export default function Landing() {
               </div>
 
               {/* Showcase Footer Status */}
-              <div className="px-4 py-2.5 bg-slate-100/90 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-600">
+              <div className="px-3 sm:px-4 py-2 bg-slate-100/90 border-t border-slate-200 flex flex-wrap items-center justify-between gap-1 text-xs text-slate-600">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="font-mono text-[11px]">Veo 3 AI Defense Engine v2.8 • Autonomous Mode</span>
+                  <span className="font-mono text-[10px] sm:text-[11px]">Veo 3 AI Defense Engine v2.8 • Autonomous Mode</span>
                 </div>
-                <div className="flex items-center gap-4 font-mono text-[11px]">
+                <div className="flex items-center gap-3 font-mono text-[10px] sm:text-[11px]">
                   <span className="text-orange-600 font-bold">LATENCY: 14MS</span>
-                  <span className="text-cyan-700 font-medium">ENCRYPTION: AES-256-GCM</span>
+                  <span className="text-cyan-700 font-medium hidden sm:inline">ENCRYPTION: AES-256</span>
                 </div>
               </div>
 
@@ -651,17 +652,17 @@ export default function Landing() {
                   Simulate Defense: {selectedFraud.name}
                 </h3>
               </div>
-              <div className="flex items-center gap-3 shrink-0">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto shrink-0">
                 <button
                   onClick={handleSimulateNeutralize}
                   disabled={simulatingNeutralize}
-                  className="btn-primary text-xs sm:text-sm px-5 py-2.5 rounded-xl font-bold cursor-pointer"
+                  className="btn-primary text-xs sm:text-sm px-5 py-3 rounded-xl font-bold cursor-pointer justify-center min-h-[44px]"
                 >
                   {simulatingNeutralize ? 'Analyzing Payload...' : 'Test AI Neutralization'}
                 </button>
                 <button
                   onClick={() => handleToolClick(selectedFraud.targetPath)}
-                  className="btn-secondary text-xs sm:text-sm px-4 py-2.5 rounded-xl font-bold cursor-pointer flex items-center gap-1.5"
+                  className="btn-secondary text-xs sm:text-sm px-4 py-3 rounded-xl font-bold cursor-pointer flex items-center justify-center gap-1.5 min-h-[44px]"
                 >
                   Scan Target
                   <ChevronRight size={14} />
@@ -848,20 +849,18 @@ export default function Landing() {
                 <p className="text-base md:text-lg text-orange-100 max-w-xl mx-auto mb-8 font-normal leading-relaxed">
                   Join millions of users defending their identity, accounts, and organizations with PHISHGUARD AI.
                 </p>
-                <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-                  <Magnet padding={50} magnetStrength={3}>
-                    <button
-                      onClick={() => navigate(isAuthenticated ? '/dashboard' : '/signup')}
-                      className="bg-white text-orange-600 hover:bg-orange-50 text-base font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2 cursor-pointer"
-                      aria-label="Create free account"
-                    >
-                      {isAuthenticated ? 'Open Dashboard' : 'Create Free Account'}
-                      <ArrowRight size={18} />
-                    </button>
-                  </Magnet>
+                <div className="flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-3.5 max-w-md sm:max-w-none mx-auto">
+                  <button
+                    onClick={() => navigate(isAuthenticated ? '/dashboard' : '/signup')}
+                    className="bg-white text-orange-600 hover:bg-orange-50 text-base font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2 cursor-pointer min-h-[48px] active:scale-98"
+                    aria-label="Create free account"
+                  >
+                    {isAuthenticated ? 'Open Dashboard' : 'Create Free Account'}
+                    <ArrowRight size={18} />
+                  </button>
                   <button
                     onClick={() => navigate(isAuthenticated ? '/dashboard' : '/login')}
-                    className="bg-orange-700/60 hover:bg-orange-700/80 text-white border border-white/20 text-base font-semibold px-8 py-4 rounded-xl transition cursor-pointer"
+                    className="bg-orange-700/70 hover:bg-orange-700 text-white border border-white/25 text-base font-semibold px-8 py-4 rounded-xl transition cursor-pointer min-h-[48px] active:scale-98"
                     aria-label="Sign in"
                   >
                     {isAuthenticated ? 'Command Center' : 'Sign In to Portal'}

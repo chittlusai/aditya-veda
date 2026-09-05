@@ -126,7 +126,7 @@ export default function SocialScan() {
             <button
               type="submit"
               disabled={status === 'scanning'}
-              className="px-6 py-3 rounded-xl bg-pink-600 hover:bg-pink-500 text-white font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-50 font-mono text-sm"
+              className="px-6 py-3 rounded-xl bg-pink-600 hover:bg-pink-500 text-white font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-50 font-mono text-sm w-full sm:w-auto min-h-[44px]"
             >
               {status === 'scanning' ? (
                 <>
@@ -184,7 +184,7 @@ export default function SocialScan() {
       {status === 'done' && result && (
         <div className="card bg-white border border-slate-200/90 shadow-xl rounded-2xl p-6 space-y-6 text-left animate-in fade-in duration-300">
           {/* Real-time Persistence Notification Badge */}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-pink-50/80 border border-pink-200 text-slate-900 text-xs font-mono">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-pink-50/80 border border-pink-200 text-slate-900 text-xs font-mono">
             <span className="flex items-center gap-2 text-emerald-700 font-bold">
               <CheckCircle2 size={15} /> Real-Time Telemetry Logged
             </span>
@@ -198,7 +198,7 @@ export default function SocialScan() {
 
           {/* Verdict Banner */}
           <div
-            className={`p-4 rounded-xl border flex items-start justify-between gap-4 ${
+            className={`p-4 sm:p-5 rounded-xl border flex flex-col sm:flex-row items-start justify-between gap-4 ${
               result.isScam
                 ? 'bg-red-50/80 border-red-200 text-red-900'
                 : 'bg-emerald-50/80 border-emerald-200 text-emerald-900'
@@ -228,7 +228,7 @@ export default function SocialScan() {
               </div>
             </div>
 
-            <div className="text-right shrink-0">
+            <div className="flex sm:block items-center justify-between w-full sm:w-auto text-left sm:text-right shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200/60">
               <span className="text-[10px] uppercase font-bold tracking-wider opacity-70">Threat Risk</span>
               <div className={`text-2xl font-black font-mono ${result.isScam ? 'text-red-600' : 'text-emerald-600'}`}>
                 {result.riskScore}/100
