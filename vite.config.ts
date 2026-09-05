@@ -6,7 +6,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    allowedHosts: true,
+    allowedHosts: ['aditya-veda.onrender.com', '.onrender.com', 'localhost'],
     proxy: {
       '/api/threat-feed/openphish': {
         target: 'https://openphish.com',
@@ -16,6 +16,6 @@ export default defineConfig({
     }
   },
   preview: {
-    allowedHosts: true
+    allowedHosts: ['aditya-veda.onrender.com', '.onrender.com', 'localhost']
   }
 })
